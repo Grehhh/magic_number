@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Número Magico</title>
+    <style>
+        input {
+            margin: 5px 0;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div id="container">
+            <p>Establece un número de intentos y adivina el número entre 0 y 100</p>
+            Numero de intentos: <input type="text" id="attempts"><br>
+            Adivina el numero: <input type="text" id="number" disabled><br>
+            <button id="send" onclick="magicNum()">Enviar</button>
+        </div>
+
+        <div>
+            <div id="attemptsRemaining"></div>
+            <div id="lastAttempt"></div>
+        </div>
+    </main>
+
+    <script>
+
+        var att = document.getElementById('attempts');
+        var num = document.getElementById('number');
+        var attRem = document.getElementById('attemptsRemaining');
+        var lastAtt = document.getElementById('lastAttempt');
+        var magicNumber = Math.round(Math.random()*100);
+        // console.log(magicNumber);
+
+        function magicNum () {
+            att.disabled = true;
+            att.style.color = "transparent";
+            num.disabled = false;
+            attRem.innerHTML = `<p>Tienes ${att.value} intentos restantes</p>`;
+
+            if(att.value > 0) {
+
+                function subtract () {
+                    att.value--;
+                }
+                subtract();
+
+                if (num.value != '') {
+                    switch(true) {
+                    case (num.value > magicNumber):
+                        lastAtt.innerHTML += `<p>${num.value} es mayor que el numero magico</p>`;
+                        num.value = '';
+                    break;
+                    case (num.value < magicNumber):
+                        lastAtt.innerHTML += `<p>${num.value} es menor que el numero magico</p>`;
+                        num.value = '';
+                    break;
+                    default:
+                        lastAtt.innerHTML += '<p>HAS GANADO</p>';
+                    }
+                }
+                
+            } else {
+                attRem.innerText = `Has perdido`
+            }
+            
+        }
+
+    </script>
+
+</body>
+</html>
